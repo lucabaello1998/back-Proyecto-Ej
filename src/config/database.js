@@ -12,10 +12,12 @@ const pool = new Pool({
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
   ssl: process.env.DB_SSL === 'true' ? { rejectUnauthorized: false } : false,
+  timezone: 'America/Argentina/Buenos_Aires',
 });
 
-// Verificar conexión
-pool.on('connect', () => {
+// Configurar timezone para la sesión
+pool.on('connect', (client) => {
+  client.query("SET timezone = 'America/Argentina/Buenos_Aires'");
   console.log('✓ Conectado a PostgreSQL');
 });
 
