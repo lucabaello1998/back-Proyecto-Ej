@@ -128,6 +128,9 @@ router.get('/:id', getProjectById);
  *               creador:
  *                 type: string
  *                 example: Sebastián
+ *               demo_url:
+ *                 type: string
+ *                 example: https://mi-proyecto.vercel.app
  *     responses:
  *       201:
  *         description: Proyecto creado exitosamente
@@ -186,6 +189,8 @@ router.post('/', authMiddleware, createProject);
  *                 items:
  *                   type: string
  *               creador:
+ *                 type: string
+ *               demo_url:
  *                 type: string
  *     responses:
  *       200:

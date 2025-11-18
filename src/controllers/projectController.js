@@ -34,12 +34,13 @@ export const getAllProjects = async (req, res) => {
 
     const result = await pool.query(
       `SELECT * FROM proyectos 
+       WHERE activo = TRUE
        ORDER BY created_at DESC 
        LIMIT $1 OFFSET $2`,
       [limit, offset]
     );
 
-    const countResult = await pool.query('SELECT COUNT(*) FROM proyectos');
+    const countResult = await pool.query('SELECT COUNT(*) FROM proyectos WHERE activo = TRUE');
     const total = parseInt(countResult.rows[0].count);
 
     res.json({
@@ -63,7 +64,7 @@ export const getProjectById = async (req, res) => {
     const { id } = req.params;
 
     const result = await pool.query(
-      'SELECT * FROM proyectos WHERE id = $1',
+      'SELECT * FROM proyectos WHERE id = $1 AND activo = TRUE',
       [id]
     );
 
@@ -119,13 +120,13 @@ export const updateProject = async (req, res) => {
   }
 };
 
-// Eliminar un proyecto
+// Eliminar un proyecto (borrado lógico)
 export const deleteProject = async (req, res) => {
   try {
     const { id } = req.params;
 
     const result = await pool.query(
-      'DELETE FROM proyectos WHERE id = $1 RETURNING *',
+      'UPDATE proyectos SET activo = FALSE, updated_at = CURRENT_TIMESTAMP WHERE id = $1 AND activo = TRUE RETURNING *',
       [id]
     );
 

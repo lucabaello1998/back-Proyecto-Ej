@@ -93,6 +93,10 @@ const options = {
               type: 'string',
               description: 'URL de la demo del proyecto',
             },
+            activo: {
+              type: 'boolean',
+              description: 'Estado del proyecto (borrado lógico)',
+            },
             created_at: {
               type: 'string',
               format: 'date-time',
