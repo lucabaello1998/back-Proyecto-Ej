@@ -66,6 +66,11 @@ app.use((err, req, res, next) => {
 
 // Iniciar servidor
 app.listen(PORT, () => {
-  console.log(`\n🚀 Servidor corriendo en http://localhost:${PORT}`);
-  console.log(`📚 Documentación Swagger: http://localhost:${PORT}/api-docs\n`);
+  const isProduction = process.env.NODE_ENV === 'production';
+  const baseUrl = isProduction 
+    ? 'https://back-proyecto-ej.onrender.com' 
+    : `http://localhost:${PORT}`;
+  
+  console.log(`\n🚀 Servidor corriendo en ${baseUrl}`);
+  console.log(`📚 Documentación Swagger: ${baseUrl}/api-docs\n`);
 });
