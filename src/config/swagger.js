@@ -89,6 +89,10 @@ const options = {
               type: 'string',
               description: 'Nombre del creador original',
             },
+            demo_url: {
+              type: 'string',
+              description: 'URL de la demo del proyecto',
+            },
             created_at: {
               type: 'string',
               format: 'date-time',
