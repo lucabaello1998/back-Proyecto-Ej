@@ -3,17 +3,17 @@ import pool from '../config/database.js';
 // Crear un nuevo proyecto
 export const createProject = async (req, res) => {
   try {
-    const { titulo, descripcion, imagenes, stack, tags, creador } = req.body;
+    const { titulo, descripcion, imagenes, stack, tags, creador, demo_url } = req.body;
 
     if (!titulo) {
       return res.status(400).json({ error: 'El título es requerido' });
     }
 
     const result = await pool.query(
-      `INSERT INTO proyectos (titulo, descripcion, imagenes, stack, tags, creador) 
-       VALUES ($1, $2, $3, $4, $5, $6) 
+      `INSERT INTO proyectos (titulo, descripcion, imagenes, stack, tags, creador, demo_url) 
+       VALUES ($1, $2, $3, $4, $5, $6, $7) 
        RETURNING *`,
-      [titulo, descripcion, imagenes || [], stack || [], tags || [], creador || null]
+      [titulo, descripcion, imagenes || [], stack || [], tags || [], creador || null, demo_url || null]
     );
 
     res.status(201).json({
@@ -82,7 +82,7 @@ export const getProjectById = async (req, res) => {
 export const updateProject = async (req, res) => {
   try {
     const { id } = req.params;
-    const { titulo, descripcion, imagenes, stack, tags, creador } = req.body;
+    const { titulo, descripcion, imagenes, stack, tags, creador, demo_url } = req.body;
 
     // Verificar que el proyecto existe
     const checkResult = await pool.query(
@@ -102,10 +102,11 @@ export const updateProject = async (req, res) => {
            stack = COALESCE($4, stack),
            tags = COALESCE($5, tags),
            creador = COALESCE($6, creador),
+           demo_url = COALESCE($7, demo_url),
            updated_at = CURRENT_TIMESTAMP
-       WHERE id = $7
+       WHERE id = $8
        RETURNING *`,
-      [titulo, descripcion, imagenes, stack, tags, creador, id]
+      [titulo, descripcion, imagenes, stack, tags, creador, demo_url, id]
     );
 
     res.json({

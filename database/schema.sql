@@ -21,6 +21,7 @@ CREATE TABLE IF NOT EXISTS proyectos (
     stack VARCHAR(100)[],  -- Array de tecnologías
     tags VARCHAR(50)[],    -- Array de etiquetas
     creador VARCHAR(100),  -- Nombre del creador original (texto libre)
+    demo_url VARCHAR(500), -- URL de la demo del proyecto
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
